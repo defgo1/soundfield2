@@ -1,0 +1,21 @@
+/* Soundfield v2 offline-first app shell. No telemetry or analytics. */
+const CACHE='soundfield-offline-v2-20261029';
+const ASSETS=['./','./index.html','./manifest.webmanifest','./icon-192.png','./icon-512.png'];
+self.addEventListener('install',event=>event.waitUntil(
+  caches.open(CACHE).then(cache=>cache.addAll(ASSETS)).then(()=>self.skipWaiting())
+));
+self.addEventListener('activate',event=>event.waitUntil(Promise.all([
+  caches.keys().then(keys=>Promise.all(keys.filter(k=>k.startsWith('soundfield-')&&k!==CACHE).map(k=>caches.delete(k)))),
+  self.clients.claim()
+])));
+self.addEventListener('fetch',event=>{
+  const request=event.request,url=new URL(request.url);
+  if(request.method!=='GET'||url.origin!==self.location.origin)return;
+  if(request.mode==='navigate'){
+    event.respondWith(fetch(request).then(response=>{
+      if(response.ok){const copy=response.clone();caches.open(CACHE).then(cache=>cache.put('./index.html',copy)).catch(()=>{});}return response;
+    }).catch(async()=>await caches.match('./index.html')||Response.error()));
+  }else{
+    event.respondWith(caches.match(request,{ignoreSearch:true}).then(cached=>cached||fetch(request)));
+  }
+});

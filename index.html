@@ -1,0 +1,452 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#101b29">
+  <meta name="description" content="A location-responsive musical field for 2–20+ smartphones. Every device plays locally; no location uploads.">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Soundfield">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="apple-touch-icon" href="./icon-192.png">
+  <title>Soundfield — A decentralised musical experience</title>
+  <style>
+    :root{color-scheme:dark;--bg:#0b1320;--card:#142236;--card2:#17283b;--edge:#2b4056;--text:#f6f8fc;--muted:#acbdcc;--mint:#7fe0bd;--purple:#b2a0ff;--orange:#f3b273;--blue:#8cd4f2;--pink:#f19ab3}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(ellipse at 0% -10%,#183450 0,transparent 44%),radial-gradient(ellipse at 90% 20%,#262445 0,transparent 35%),var(--bg);color:var(--text);font-family:Poppins,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.45;min-height:100vh}
+    button,input,select{font:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible,select:focus-visible,.zone:focus-visible{outline:3px solid var(--mint);outline-offset:2px}.wrap{width:min(1120px,100%);margin:auto;padding:22px 18px 70px}.topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:24px}.brand{display:flex;align-items:center;gap:12px;font-size:18px;font-weight:800;letter-spacing:-.035em}.brandicon{display:grid;place-items:center;width:42px;height:42px;border-radius:14px;background:linear-gradient(135deg,var(--mint),var(--blue));color:#102333;font-size:24px}.topchip{border:1px solid #3c625b;background:#193d37;border-radius:100px;color:#adf0d6;font-size:12px;padding:7px 10px;font-weight:700;white-space:nowrap}.hero{max-width:760px;margin:0 0 23px}.eyebrow{color:var(--mint);font-weight:800;text-transform:uppercase;letter-spacing:.16em;font-size:11px;margin-bottom:7px}.hero h1{font-size:clamp(31px,5vw,50px);letter-spacing:-.055em;line-height:1.09;margin:0 0 12px}.hero h1 span{color:var(--mint)}.hero p{color:var(--muted);font-size:15px;max-width:690px;margin:0}
+    .cols{display:grid;grid-template-columns:minmax(0,1fr) minmax(305px,.89fr);gap:16px;align-items:start}.stack{display:grid;gap:16px}.panel{background:linear-gradient(160deg,#19293c,#112034);border:1px solid var(--edge);border-radius:22px;padding:20px;box-shadow:0 13px 36px #0002}.panel h2{font-size:18px;margin:0 0 5px;letter-spacing:-.025em}.panel h3{font-size:14px;margin:0 0 8px}.sub{color:var(--muted);font-size:13px;margin:0 0 16px}.little{font-size:12px;color:var(--muted)}.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.row.between{justify-content:space-between}.seg{display:grid;grid-template-columns:1fr 1fr;background:#0b1727;padding:5px;border:1px solid var(--edge);border-radius:13px;gap:4px}.seg button{border:0;border-radius:9px;padding:11px 10px;background:transparent;color:var(--muted);font-size:13px;font-weight:700}.seg button.active{background:#304b60;color:#fff}.btn{background:#233b51;border:1px solid #416078;color:#f5f9fb;border-radius:12px;padding:11px 14px;display:inline-flex;align-items:center;justify-content:center;gap:8px;font-size:13px;font-weight:700;min-height:44px;transition:background .2s}.btn:hover{background:#30506b}.btn.primary{background:var(--mint);border-color:var(--mint);color:#102a29}.btn.primary:hover{background:#b2f0d9}.btn.warn{background:#6d3544;border-color:#a15a69}.btn.large{padding:16px;font-size:17px;width:100%;min-height:60px;border-radius:15px}.btn:disabled{opacity:.43;cursor:not-allowed}.field{display:grid;gap:5px;flex:1;min-width:112px}.field label{color:#cfdae5;font-size:12px;font-weight:700}.field input,.field select{width:100%;background:#0e1b2b;color:var(--text);border:1px solid #3a5065;border-radius:10px;padding:10px 11px;min-height:43px;font-size:14px}.field select{appearance:auto}.formgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.divider{border:0;border-top:1px solid var(--edge);margin:17px 0}.notice{padding:11px 13px;border-radius:12px;background:#253c48;border:1px solid #4b6570;font-size:12px;line-height:1.5;color:#d8e9ec}.notice.warning{background:#453426;border-color:#866447;color:#ffdbb3}.notice.error{background:#4a2533;border-color:#945467;color:#ffd0d9}.notice.good{background:#183d36;border-color:#386f61;color:#c1f3dc}.kicker{font-weight:800;color:var(--mint);font-size:12px;letter-spacing:.08em;text-transform:uppercase}.map{position:relative;width:100%;aspect-ratio:1/1;max-height:500px;border-radius:18px;overflow:hidden;border:1px solid #547083;isolation:isolate;background:#192a40;touch-action:manipulation}.quad{position:absolute;width:50%;height:50%;border:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;cursor:pointer;text-align:center;padding:18px 8px;transition:filter .18s,box-shadow .18s;color:#fff}.quad:hover{filter:brightness(1.15)}.quad strong{font-size:clamp(14px,2vw,18px);line-height:1.1}.quad small{font-size:11px;opacity:.88}.quad .symbol{font-size:28px}.quad.nw{left:0;top:0;background:#483c77}.quad.ne{left:50%;top:0;background:#305874}.quad.sw{left:0;top:50%;background:#665038}.quad.se{left:50%;top:50%;background:#265b52}.quad.selected{box-shadow:inset 0 0 0 4px #fff9;filter:brightness(1.2)}.crossx,.crossy{position:absolute;z-index:3;pointer-events:none;background:#ffffff75}.crossx{width:1px;top:0;bottom:0;left:50%}.crossy{height:1px;left:0;right:0;top:50%}.mapDot{position:absolute;left:25%;top:25%;width:23px;height:23px;background:white;border:4px solid #193548;border-radius:50%;box-shadow:0 0 0 10px #ffffff30,0 3px 13px #0009;transform:translate(-50%,-50%);z-index:5;pointer-events:none;transition:left .3s ease,top .3s ease}.north{position:absolute;z-index:4;top:10px;left:50%;transform:translateX(-50%);font-size:10px;font-weight:900;letter-spacing:.14em;background:#091829bb;padding:4px 8px;border-radius:6px;pointer-events:none}.mapLegend{margin:10px 0 0;display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap}.data{font-size:12px;color:var(--muted)}.data b{color:white}.statusBig{font-size:30px;font-weight:850;letter-spacing:-.04em;line-height:1.15;margin:3px 0 6px}.playingGlow{animation:pulse 2s ease-in-out infinite}@keyframes pulse{50%{filter:brightness(1.3)}}.rangeRow{display:grid;grid-template-columns:76px 1fr 43px;gap:10px;align-items:center}.rangeRow label{font-size:12px;font-weight:800;color:var(--muted)}input[type=range]{width:100%;accent-color:var(--mint);height:25px}.footer{margin-top:20px;text-align:center;color:#889aaa;font-size:12px}.pill{border-radius:100px;font-size:11px;padding:5px 8px;background:#26384c;color:#d5e3f1;display:inline-flex;gap:5px;align-items:center}.check{color:var(--mint)}#toast{position:fixed;left:50%;bottom:max(16px,env(safe-area-inset-bottom));transform:translateX(-50%);z-index:99;background:#e0fff0;color:#123b31;font-size:13px;font-weight:700;box-shadow:0 6px 28px #0007;padding:12px 17px;border-radius:13px;opacity:0;transition:opacity .2s;pointer-events:none;max-width:calc(100vw - 30px);text-align:center}#toast.show{opacity:1}.countDown{font-variant-numeric:tabular-nums;font-weight:800;color:#fff}.monoblock{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;word-break:break-all;font-size:11px;color:#d9e5f1;background:#0e1b2b;padding:10px;border-radius:9px;border:1px solid #344b60;display:none;margin-top:10px}.monoblock.visible{display:block}.footnote{margin:12px 0 0;font-size:12px;color:var(--muted)}.hide{display:none!important}
+    @media(max-width:750px){.wrap{padding:14px 13px 70px}.cols{grid-template-columns:minmax(0,1fr)}.panel{padding:16px;border-radius:17px}.hero{margin-bottom:18px}.map{max-height:none}.topchip{font-size:10px}.quad .symbol{font-size:24px}.hero p{font-size:14px}}
+    @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
+
+    .cellGrid{position:absolute;inset:0;display:grid;z-index:1}.cell{border:1px solid #ffffff3a;background:rgba(32,64,94,.5);color:#fff;min-width:0;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:5px 2px;gap:3px}.cell small{font-size:10px;color:#fffe;line-height:1}.cell strong{font-size:clamp(11px,2vw,14px)}.cell.selected{outline:3px solid #fff;outline-offset:-4px;background:#ffffff30}.cell[data-pal="NW"]{background-color:#483c77}.cell[data-pal="NE"]{background-color:#305874}.cell[data-pal="SW"]{background-color:#665038}.cell[data-pal="SE"]{background-color:#265b52}.cell.selected{filter:brightness(1.2)}.clockDiagnostics{margin-top:9px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-weight:800;font-size:clamp(16px,3vw,22px);color:var(--mint);font-variant-numeric:tabular-nums}.eventStrip{display:flex;flex-wrap:wrap;gap:7px}.eventTag{border:1px solid #475c72;background:#1d3449;padding:7px 10px;border-radius:10px;font-size:12px}.eventTag strong{color:var(--mint)}.diagGrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}.diagCell{background:#0e1b2b;border:1px solid #30465c;border-radius:11px;padding:11px;min-width:0}.diagCell small{display:block;color:var(--muted);font-size:11px}.diagCell b{display:block;color:#fff;font-size:12px;overflow-wrap:anywhere;margin-top:5px}#scoreJson{display:block;width:100%;padding:12px;border-radius:10px;background:#091827;color:#edf5ff;font:12px/1.6 ui-monospace,SFMono-Regular,Menlo,monospace;border:1px solid #39536b;resize:vertical;min-height:180px}@media(max-width:600px){.diagGrid{grid-template-columns:repeat(2,minmax(0,1fr))}.cellGrid .cell strong{font-size:12px}.cellGrid .cell small{font-size:9px}}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="topbar"><div class="brand"><div class="brandicon">♫</div> SOUNDFIELD <span class="pill">experimental v2.0</span></div><div class="topchip">● PRIVATE BY DESIGN</div></header>
+    <div class="hero"><div class="eyebrow">Move • listen • become the orchestra</div><h1>A musical landscape <span>made by people.</span></h1><p>Every phone is an independent instrument. Your grid cell changes its notes; a shared clock keeps the composition together. No central controller and no live location uploads.</p></div>
+    <div class="cols">
+      <div class="stack">
+        <section class="panel" aria-labelledby="field-heading">
+          <div class="row between"><div><h2 id="field-heading">Your soundfield</h2><p class="sub">Try 2×2, 3×3, or 4×4 cells. Each quadrant has a sound palette; finer cells alter pitch.</p></div><span class="pill" id="modeBadge">MANUAL DEMO</span></div>
+          <div class="map" id="stageMap" aria-label="Four-quadrant map of the performance space">
+            <div id="cellGrid" class="cellGrid" role="group" aria-label="Selectable soundfield grid"></div>
+            <div class="crossx"></div><div class="crossy"></div><div class="north">N ↑</div><div class="mapDot" id="mapDot" aria-hidden="true"></div>
+          </div>
+          <div class="mapLegend"><span class="data">Zone: <b id="currentZone">North-west — Bells</b></span><span class="data">Position: <b id="distance">Manual placement</b></span></div>
+          <div class="row" style="margin-top:13px"><button class="btn" id="nextZone">↻ Move to next zone</button><span class="little" id="accuracy">Tap a quadrant to hear the difference</span></div>
+        </section>
+        <section class="panel">
+          <h2>1 · How will you move?</h2><p class="sub">Start with manual mode inside, then switch to outdoor GPS. Phone location permission is optional for sound.</p>
+          <div class="seg" role="group" aria-label="Positioning mode"><button type="button" id="manualMode" class="active" aria-pressed="true">☝ Manual test</button><button type="button" id="gpsMode" aria-pressed="false">⌖ Live GPS</button></div>
+          <div class="notice" id="modeHelp" style="margin-top:13px">Manual mode: tap any quadrant on the map. Each phone makes its own sounds even when all devices are in the same room.</div>
+          <div class="row hide" id="gpsButtons" style="margin-top:13px"><button class="btn primary" id="watchGPS">◎ Start location tracking</button><span class="little" id="gpsStatus">Permission not requested</span></div>
+        </section>
+      </div>
+      <div class="stack">
+        <section class="panel">
+          <h2>2 · Set up the stage</h2><p class="sub">One person creates the stage; everyone uses their invite link. All settings travel in the link, not through a server.</p>
+          <div class="formgrid"><div class="field"><label for="lat">Centre latitude</label><input id="lat" type="number" step="any" placeholder="e.g. -38.15" inputmode="decimal"></div><div class="field"><label for="lon">Centre longitude</label><input id="lon" type="number" step="any" placeholder="e.g. 145.12" inputmode="decimal"></div></div>
+          <div class="row" style="margin:11px 0 15px"><button class="btn" id="centerHere">⌖ Use my GPS position as centre</button></div>
+          <div class="formgrid"><div class="field"><label for="size">Size of performance area</label><select id="size"><option value="40">40 × 40 m</option><option value="80" selected>80 × 80 m</option><option value="120">120 × 120 m</option><option value="200">200 × 200 m</option></select></div><div class="field"><label for="gridCount">Grid density</label><select id="gridCount"><option value="2" selected>2 × 2 (4 cells)</option><option value="3">3 × 3 (9 cells)</option><option value="4">4 × 4 (16 cells)</option></select></div></div><p class="little" id="cellSizeHint" style="margin:8px 0 0">Each cell is 40 × 40 m. 4 × 4 at 80 m gives 20 × 20 m cells.</p>
+          <hr class="divider">
+          <h3>Shared show clock</h3><p class="little" style="margin:0 0 9px">All phones follow the same start timestamp. Select a start time, then send the updated link.</p>
+          <div class="row"><button class="btn" id="startNow">Start clock now</button><button class="btn" id="startSoon">Begin in 90 seconds</button></div>
+          <div class="notice" style="margin-top:13px" id="clockInfo">Calculating start time…</div><div class="clockDiagnostics" id="elapsedDisplay">Elapsed 00:00:00.000</div><p class="little" style="margin:6px 0 0">The visual counter is diagnostic only; it is not the audio scheduler or a cross-phone sync measurement.</p>
+          <div class="row" style="margin-top:13px"><button class="btn primary" id="shareLink">↗ Copy invitation link</button><button class="btn" id="nativeShare">Share…</button></div>
+          <div id="linkFallback" class="monoblock" aria-label="Shareable URL"></div>
+          <p class="footnote" id="stageHelp">In GPS mode everyone must use the same latitude, longitude, stage size and start time. Manual mode works without coordinates.</p>
+        </section>
+        <section class="panel">
+          <h2>3 · Become an instrument</h2><p class="sub">For 2–20+ phones, repeat the five parts. Each cell shapes the pitch; each quadrant shapes the timbre.</p>
+          <div class="formgrid"><div class="field"><label for="program">Programme</label><select id="program"><option value="loop">Original ambient loop</option><option value="events">Sonic event study (64s repeat)</option></select></div><div class="field"><label for="deviceNumber">Device number (for tests)</label><select id="deviceNumber"><option value="0">Unassigned</option></select></div></div><p class="little" id="programHint" style="margin:7px 0 12px">The original programme is unchanged. Try the event study to test sharply timed, sustained and swept sounds.</p><div class="field"><label for="voice">Your musical part</label><select id="voice"><option value="0">1 · Melodic lead</option><option value="1">2 · Answering notes</option><option value="2">3 · Flowing harmony</option><option value="3">4 · Gentle pulse</option><option value="4">5 · Floating atmosphere</option></select></div>
+          <div class="rangeRow" style="margin:16px 0"><label for="volume">Volume</label><input id="volume" type="range" min="0" max="100" value="55"><span id="volLabel" class="little">55%</span></div>
+          <div class="field" style="margin-bottom:12px"><label for="clockTrim">Per-device audio timing trim (testing only)</label><div class="row"><input id="clockTrim" type="range" min="-250" max="250" step="5" value="0" style="flex:1;min-width:130px"><b id="trimValue" class="little">0 ms</b><button type="button" id="trimReset" class="btn">Reset</button></div><span class="little">Use only if a recorded sync click reveals consistent offset. Negative values play earlier; positive values play later. Not a measurement.</span></div><div class="notice" id="playNotice">Tap below once on every phone to enable sound. Keep the screen awake and turn up your phone's media volume.</div>
+          <div style="margin-top:13px"><button id="play" class="btn primary large">▶ Arm sound & join the piece</button></div>
+          <div class="row between" style="margin-top:14px"><div><div class="kicker">CURRENT STATE</div><div class="statusBig" id="state">Ready to join</div><div class="little" id="playDetail">Tempo: 96 BPM · 4-chord loop · 5 parts</div></div><span id="audioIndicator" class="pill">SOUND OFF</span></div>
+          <div class="row between" style="margin-top:10px"><span id="wakeStatus" class="little">Wake lock: not requested</span><span id="foregroundStatus" class="little">Page: foreground</span></div><div class="notice warning hide" style="margin-top:13px" id="audioWarning">Audio has been suspended by the browser. Return to the app and tap the play button again.</div>
+        </section>
+      </div>
+    </div>
+    <div class="panel" style="margin-top:16px">
+      <div class="row between"><div><h2>Experimental score · programmable sonic events</h2><p class="sub" style="margin-bottom:6px">Try a sync beacon, short notes, a sustained drone, pitch sweeps, and a pause. Edit the JSON to try your composition; share the newly generated link so every phone has exactly the same score.</p></div><span class="pill" id="scoreLabel">DEFAULT 64s</span></div>
+      <div class="eventStrip" id="eventStrip" aria-label="Example score timeline"></div>
+      <div class="row" style="margin:12px 0"><button id="toggleEditor" class="btn" type="button">Show score JSON</button><button id="copyScore" class="btn" type="button">Copy score JSON</button><span id="nextEventLabel" class="little">Events are timed from the shared start</span></div>
+      <div id="scoreEditorBox" class="hide"><label class="little" for="scoreJson">Score JSON — all times in seconds from the beginning of one cycle</label><textarea id="scoreJson" spellcheck="false" rows="14" aria-label="Editable sonic event score JSON"></textarea><div class="row" style="margin:10px 0"><button class="btn primary" id="applyScore" type="button">Apply score locally</button><button class="btn" id="resetScore" type="button">Restore sample score</button></div><div class="notice" id="scoreValidation">Edits apply only on this phone until you share a new invitation link. Re-arm audio when testing a modified score.</div></div>
+    </div>
+    <div class="panel" style="margin-top:16px">
+      <div class="row between"><div><h2>Device diagnostics</h2><p class="sub">Local-only evidence for larger 5, 10 and 20-phone rehearsals. Each phone must copy its own report.</p></div><button id="copyReport" type="button" class="btn">Copy report</button></div>
+      <div class="diagGrid"><div class="diagCell"><small>Audio engine</small><b id="diagAudio">Not armed</b></div><div class="diagCell"><small>Scheduled / late events</small><b id="diagEvents">0 / 0</b></div><div class="diagCell"><small>GPS permission</small><b id="diagPermission">Not checked</b></div><div class="diagCell"><small>GPS fixes / accuracy</small><b id="diagGPS">0 / —</b></div><div class="diagCell"><small>Visibility interruptions</small><b id="diagHidden">0</b></div><div class="diagCell"><small>Programme / score ID</small><b id="diagScore">—</b></div></div>
+      <p class="footnote">This report does <b>not</b> measure true acoustic sync between phones. For that, record the periodic sync beacons together on one microphone and compare their transients. No attendee locations are uploaded.</p>
+      <details style="margin-top:10px"><summary class="little" style="cursor:pointer">GPS troubleshooting for phones that cannot track</summary><p class="little">Use the full HTTPS website directly in Safari or Chrome (not an embedded preview), enable location services for that browser, allow the site to use precise location, then tap “Start location tracking” again. On iPhone inspect Settings → Privacy &amp; Security → Location Services and Safari Websites / your browser; on Android inspect the browser's site permissions and system location permission. Some browsers do not support querying the permission state.</p></details>
+    </div>
+    <div class="panel" style="margin-top:16px">
+      <h2>Field notes · Testing with 2–20+ phones</h2>
+      <div class="row" style="margin-top:11px;align-items:stretch"><div class="notice" style="flex:1;min-width:200px"><b>① Indoor rehearsal</b><br>Open on each phone, stay in manual mode, pick different musical parts, tap “Start clock now” and arm sound. Share a common link for closer alignment.</div><div class="notice" style="flex:1;min-width:200px"><b>② Outdoor walk</b><br>On one phone, use your GPS position as centre, choose 80m, tap “Begin in 90 seconds”, then share the invitation. Everyone opens it, starts GPS and arms sound.</div><div class="notice" style="flex:1;min-width:200px"><b>③ Hear the collective sound</b><br>Spread out, walk between quadrants, and listen to how the tones combine through the air. GPS accuracy and speaker loudness vary by device.</div></div>
+    </div>
+    <div class="footer">Original locally synthesised audio · Zero analytics · No accounts · Location never transmitted by this application · GPS needs HTTPS and permission</div>
+  </div>
+  <div id="toast" role="status" aria-live="polite"></div>
+  <script>
+  (() => {
+    'use strict';
+    const $ = id => document.getElementById(id);
+    const ZONES = ['NW','NE','SW','SE'];
+    const NAMES = {NW:'North-west — Bells',NE:'North-east — Marimba',SW:'South-west — Deep waves',SE:'South-east — Glass'};
+    const BPM = 96;
+    const STEP_MS = 60000 / BPM / 2; // one eighth note
+    const CHORDS = [[60,64,67,72],[57,60,64,69],[53,57,60,65],[55,59,62,67]];
+    const clamp = (v,low,high) => Math.max(low,Math.min(high,v));
+    // Shared event score: the same timestamped JSON runs independently on every device.
+    const DEMO_SCORE={duration:64,events:[
+      {t:0,type:'beacon',label:'Shared onset'},
+      {t:4,type:'pulse',label:'Four short notes',count:4,gap:.5},
+      {t:12,type:'drone',label:'Long evolving chord',duration:6},
+      {t:20,type:'sweep',label:'Ascending sweep',duration:3},
+      {t:28,type:'beacon',label:'Timing checkpoint'},
+      {t:32,type:'pulse',label:'Fast ripple',count:8,gap:.23},
+      {t:40,type:'drone',label:'Sustained texture',duration:7},
+      {t:50,type:'sweep',label:'Descending sweep',duration:4,down:true},
+      {t:57,type:'rest',label:'Silence / recovery test'},
+      {t:60,type:'beacon',label:'Final sync checkpoint'}
+    ]};
+    const SCORE_TYPES=new Set(['beacon','pulse','drone','sweep','rest']);
+    const deepClone=x=>JSON.parse(JSON.stringify(x));
+    function validateScore(raw){
+      if(!raw||typeof raw!=='object'||!Number.isFinite(raw.duration)||raw.duration<8||raw.duration>600||!Array.isArray(raw.events)||raw.events.length===0||raw.events.length>90)throw Error('Score needs duration 8–600 seconds and 1–90 events.');
+      const events=raw.events.map((e,i)=>{
+        if(!e||!SCORE_TYPES.has(e.type)||!Number.isFinite(e.t)||e.t<0||e.t>=raw.duration)throw Error('Invalid type or time in event '+(i+1));
+        const o={t:Math.round(e.t*1000)/1000,type:e.type,label:String(e.label||e.type).slice(0,55)};
+        if(e.duration!==undefined){if(!Number.isFinite(e.duration)||e.duration<=0||e.duration>12)throw Error('Invalid duration in event '+(i+1));o.duration=e.duration;}
+        if(e.count!==undefined){if(!Number.isInteger(e.count)||e.count<1||e.count>16)throw Error('Count must be 1–16');o.count=e.count;}
+        if(e.gap!==undefined){if(!Number.isFinite(e.gap)||e.gap<.1||e.gap>2)throw Error('Gap must be 0.1–2 s');o.gap=e.gap;}
+        if(e.down!==undefined)o.down=Boolean(e.down);
+        return o;
+      });
+      events.sort((a,b)=>a.t-b.t);
+      return {duration:raw.duration,events};
+    }
+    const scoreHash=obj=>{let h=2166136261;const s=JSON.stringify(obj);for(let i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619);}return(h>>>0).toString(16).padStart(8,'0');};
+    function encodeScore(obj){const bytes=new TextEncoder().encode(JSON.stringify(obj));let bin='';for(const b of bytes)bin+=String.fromCharCode(b);return btoa(bin).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');}
+    function decodeScore(s){if(s.length>12000)throw Error('Shared score too large');const bin=atob(s.replace(/-/g,'+').replace(/_/g,'/'));const bytes=Uint8Array.from(bin,c=>c.charCodeAt(0));return validateScore(JSON.parse(new TextDecoder().decode(bytes)));}
+    function logLocal(kind,detail=''){state.logs.push({t:new Date().toISOString(),kind,detail});if(state.logs.length>90)state.logs.shift();}
+
+    const state = {mode:'manual',zone:'NW',manualX:-.5,manualY:.5,lat:null,lon:null,lastGps:null,filtered:null,watchId:null,stageWidth:80,start:Date.now()+90000,voice:0,vol:.55,playing:false,audio:null,master:null,compressor:null,timer:null,nextTick:null,updating:false,wakeLock:null,previousTime:0,grid:2,cell:{row:0,col:0},program:"loop",trim:0,nextEvent:null,score:null,customScore:false,device:0,scheduled:0,late:0,hiddenCount:0,hiddenSince:null,hiddenMs:0,gpsFixes:0,gpsError:"",gpsPermission:"not checked",lastGPSAt:null,logs:[],wakeText:"not requested"};
+    let toastTimer;
+    const toast = msg => { const el=$('toast');el.textContent=msg;el.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.classList.remove('show'),3300); };
+    const showNotice=(id,msg,cls='')=>{const e=$(id);e.textContent=msg;e.className='notice'+(cls?' '+cls:'');};
+    function validCoords(){const lat=Number($('lat').value),lon=Number($('lon').value);return $('lat').value.trim()!==''&&$('lon').value.trim()!==''&&Number.isFinite(lat)&&Number.isFinite(lon)&&lat>=-90&&lat<=90&&lon>=-180&&lon<=180;}
+    function coords(){return validCoords()?{lat:Number($('lat').value),lon:Number($('lon').value)}:null;}
+    const params = new URLSearchParams(location.search);
+    const pLat=Number(params.get('lat')),pLon=Number(params.get('lon'));
+    if(params.has('lat')&&params.has('lon')&&Number.isFinite(pLat)&&Math.abs(pLat)<=90&&Number.isFinite(pLon)&&Math.abs(pLon)<=180){$('lat').value=pLat.toFixed(7);$('lon').value=pLon.toFixed(7);}
+    const pSize=Number(params.get('size'));
+    if([40,80,120,200].includes(pSize)){$('size').value=String(pSize);state.stageWidth=pSize;}
+    const pStart=Number(params.get('t'));
+    if(params.has('t')&&Number.isFinite(pStart)&&pStart>1577836800000&&pStart<4102444800000) state.start=pStart;
+    const pGrid=Number(params.get('grid'));if([2,3,4].includes(pGrid)){state.grid=pGrid;$('gridCount').value=String(pGrid);}
+    const pProgram=params.get('program');if(['loop','events'].includes(pProgram)){state.program=pProgram;$('program').value=pProgram;}
+    state.score=deepClone(DEMO_SCORE);
+    if(params.has('score')){try{state.score=decodeScore(params.get('score'));state.customScore=true;state.program='events';$('program').value='events';}catch(e){console.warn('Shared score invalid',e);}}
+    const storedDevice=Number((()=>{try{return localStorage.getItem('soundfield-device');}catch{return null;}})());
+    for(let n=1;n<=30;n++){const o=document.createElement('option');o.value=n;o.textContent='Device '+n;$('deviceNumber').appendChild(o);}
+    if(Number.isInteger(storedDevice)&&storedDevice>=1&&storedDevice<=30){state.device=storedDevice;$('deviceNumber').value=String(storedDevice);}
+    let savedVoice=0;try{savedVoice=Number(localStorage.getItem('soundfield-voice'));}catch{}
+    if(Number.isInteger(savedVoice)&&savedVoice>=0&&savedVoice<=4){state.voice=savedVoice;$('voice').value=String(savedVoice);}
+    const PITCHES=[-5,-3,-2,0,2,4,5,7,9,11,12,14,16,17,19,21];
+    const cellWidth=()=>state.stageWidth/state.grid;
+    function cellPitch(){if(state.zone==='OUT')return 0;const i=state.cell.row*state.grid+state.cell.col;return state.grid===2?0:PITCHES[i%PITCHES.length];}
+    function cellPalette(row,col){const north=row<state.grid/2,east=col>=state.grid/2;return north?(east?'NE':'NW'):(east?'SE':'SW');}
+    function buildGrid(){const root=$('cellGrid');root.replaceChildren();root.style.gridTemplateColumns=`repeat(${state.grid},1fr)`;root.style.gridTemplateRows=`repeat(${state.grid},1fr)`;
+      for(let r=0;r<state.grid;r++)for(let c=0;c<state.grid;c++){
+        const el=document.createElement('button');el.type='button';el.className='cell';el.dataset.r=r;el.dataset.c=c;el.dataset.pal=cellPalette(r,c);
+        el.setAttribute('aria-label',`Cell row ${r+1}, column ${c+1}`);
+        const mark=document.createElement('strong');mark.textContent=`${r+1} · ${c+1}`;el.appendChild(mark);
+        const sub=document.createElement('small');sub.textContent=['Bells','Marimba','Waves','Glass'][ZONES.indexOf(el.dataset.pal)];el.appendChild(sub);
+        el.addEventListener('click',()=>{if(state.mode!=='manual'){toast('Choose manual mode to tap a cell.');return;}setManual((c+.5)/state.grid*2-1,1-(r+.5)/state.grid*2);});
+        root.appendChild(el);
+      }
+      $('cellSizeHint').textContent=`${state.grid} × ${state.grid} grid · each cell is approximately ${(cellWidth()).toFixed(1)} × ${(cellWidth()).toFixed(1)} metres. GPS ±5 m is more consequential near boundaries.`;
+      renderZone();
+    }
+    function selectedZone(next){if(state.zone===next)return;state.zone=next;renderZone();}
+    function renderZone(){for(const el of document.querySelectorAll('.cell'))el.classList.toggle('selected',state.zone!=='OUT'&&Number(el.dataset.r)===state.cell.row&&Number(el.dataset.c)===state.cell.col);
+      const suffix=state.zone==='OUT'?'':` · cell ${state.cell.row+1},${state.cell.col+1}`;
+      $('currentZone').textContent=state.zone==='OUT'?'Outside stage — silent':NAMES[state.zone]+suffix;
+      $('currentZone').style.color=state.zone==='OUT'?'#f3b273':'#fff';
+    }
+    function showDot(x,y){const px=clamp((x+1)/2*100,2,98),py=clamp((1-y)/2*100,2,98);$('mapDot').style.left=px+'%';$('mapDot').style.top=py+'%';}
+    function positionToCell(x,y,previous=state.cell){
+      const xm=x*state.stageWidth/2,ym=y*state.stageWidth/2,half=state.stageWidth/2;
+      if(Math.abs(xm)>half+3||Math.abs(ym)>half+3)return null;
+      if(state.zone==='OUT'&&(Math.abs(xm)>half-3||Math.abs(ym)>half-3))return null;
+      const col=clamp(Math.floor((x+1)*state.grid/2),0,state.grid-1);
+      const row=clamp(Math.floor((1-y)*state.grid/2),0,state.grid-1);
+      if(state.zone==='OUT'||!previous)return{row,col};
+      if(row===previous.row&&col===previous.col)return{row,col};
+      const m=Math.min(4,cellWidth()*.15);
+      const left=-half+previous.col*cellWidth(),right=left+cellWidth();
+      const top=half-previous.row*cellWidth(),bottom=top-cellWidth();
+      // Hold the previous cell while the position is still near its border.
+      if(xm>=left-m&&xm<=right+m&&ym>=bottom-m&&ym<=top+m)return previous;
+      return{row,col};
+    }
+    function applyPosition(x,y){const cell=positionToCell(x,y);
+      showDot(x,y);
+      if(!cell){selectedZone('OUT');return;}
+      state.cell=cell;state.zone=cellPalette(cell.row,cell.col);renderZone();
+    }
+    function setManual(x,y){state.manualX=x;state.manualY=y;applyPosition(x,y);$('distance').textContent='Manual placement';}
+    $('nextZone').addEventListener('click',()=>{if(state.mode!=='manual'){toast('Switch to manual mode to simulate movement.');return;}
+      const current=state.zone==='OUT'?0:state.cell.row*state.grid+state.cell.col;
+      const i=(current+1)%(state.grid*state.grid),r=Math.floor(i/state.grid),c=i%state.grid;
+      // Manual stepping bypasses GPS hysteresis so every cell can be selected.
+      state.zone='OUT';setManual((c+.5)/state.grid*2-1,1-(r+.5)/state.grid*2);
+    });
+    function setMode(mode){state.mode=mode;state.zone='OUT';const gps=mode==='gps';$('manualMode').classList.toggle('active',!gps);$('gpsMode').classList.toggle('active',gps);$('manualMode').setAttribute('aria-pressed',String(!gps));$('gpsMode').setAttribute('aria-pressed',String(gps));$('modeBadge').textContent=gps?'LIVE GPS':'MANUAL DEMO';$('gpsButtons').classList.toggle('hide',!gps);
+      if(!gps){stopGPS();showNotice('modeHelp','Manual mode: tap a quadrant, or select “Move to next zone”. Every phone is still an independent instrument.');$('accuracy').textContent='Tap a quadrant to hear the difference';setManual(state.manualX,state.manualY);}
+      else{showNotice('modeHelp','GPS mode: set the shared stage centre, then tap Start location tracking and allow precise location. The app uses your position only on this phone.');$('distance').textContent='Waiting for GPS';$('accuracy').textContent='GPS is more accurate outdoors';selectedZone('OUT');if(state.lastGps)applyGPS(state.lastGps);}
+    }
+    $('manualMode').addEventListener('click',()=>setMode('manual'));$('gpsMode').addEventListener('click',()=>setMode('gps'));
+    function applyGPS(g){const origin=coords();if(!origin){$('distance').textContent='Stage centre not set';selectedZone('OUT');return;}
+      const latFactor=111320,lonFactor=111320*Math.cos(origin.lat*Math.PI/180);
+      const xMeters=(g.lon-origin.lon)*lonFactor,yMeters=(g.lat-origin.lat)*latFactor;
+      if(state.filtered===null){state.filtered={x:xMeters,y:yMeters};}else{state.filtered.x=state.filtered.x*.65+xMeters*.35;state.filtered.y=state.filtered.y*.65+yMeters*.35;}
+      const x=state.filtered.x/(state.stageWidth/2),y=state.filtered.y/(state.stageWidth/2);
+      showDot(x,y);applyPosition(x,y);$('distance').textContent=Math.round(Math.hypot(state.filtered.x,state.filtered.y))+'m from centre';
+      $('accuracy').textContent='GPS accuracy ±'+Math.round(g.accuracy)+'m';
+      if(g.accuracy>=cellWidth()/2)showNotice('modeHelp','GPS accuracy is currently ±'+Math.round(g.accuracy)+'m, which is large relative to this stage. Expect zone changes to be unreliable. Try an open outdoor area or manual mode.','warning');
+      else showNotice('modeHelp','Live GPS active. Position stays on your phone. Walk across cell boundaries to change pitch and timbre.','good');
+    }
+    function startGPS(){if(!window.isSecureContext||!navigator.geolocation){showNotice('modeHelp','GPS is unavailable here. Open the app on an HTTPS website (for example, GitHub Pages) and permit location access. Manual mode still works.','error');return;}
+      if(state.watchId!==null)return;
+      $('gpsStatus').textContent='Locating…';$('watchGPS').textContent='◼ Stop location tracking';
+      state.watchId=navigator.geolocation.watchPosition(pos=>{
+        state.lastGps={lat:pos.coords.latitude,lon:pos.coords.longitude,accuracy:pos.coords.accuracy,time:pos.timestamp};state.gpsFixes++;state.lastGPSAt=Date.now();state.gpsError='';state.gpsPermission='granted';
+        if(state.mode==='gps')applyGPS(state.lastGps);
+        $('gpsStatus').textContent='Updated '+new Date().toLocaleTimeString();
+      },err=>{state.gpsError=err.message;state.gpsPermission=err.code===1?'denied':'error';logLocal('gps-error',err.message); $('gpsStatus').textContent=err.code===1?'Location permission denied':'Location error';showNotice('modeHelp','Location could not be read: '+err.message+'. Check permissions, HTTPS and phone location settings.','error');stopGPS();},{enableHighAccuracy:true,maximumAge:1000,timeout:18000});
+    }
+    function stopGPS(){if(state.watchId!==null){navigator.geolocation.clearWatch(state.watchId);state.watchId=null;}$('watchGPS').textContent='◎ Start location tracking';if(state.mode==='gps')$('gpsStatus').textContent='GPS stopped';state.filtered=null;}
+    $('watchGPS').addEventListener('click',()=>state.watchId===null?startGPS():stopGPS());
+    if(navigator.permissions?.query){navigator.permissions.query({name:'geolocation'}).then(p=>{state.gpsPermission=p.state;p.addEventListener?.('change',()=>state.gpsPermission=p.state);}).catch(()=>{});}
+    $('centerHere').addEventListener('click',()=>{
+      if(!window.isSecureContext||!navigator.geolocation){toast('Open on HTTPS to read GPS. You can also enter coordinates manually.');return;}
+      $('centerHere').disabled=true;$('centerHere').textContent='⌖ Finding centre…';
+      navigator.geolocation.getCurrentPosition(pos=>{
+        $('lat').value=pos.coords.latitude.toFixed(7);$('lon').value=pos.coords.longitude.toFixed(7);state.filtered=null;
+        if(state.mode==='gps'&&state.lastGps)applyGPS(state.lastGps);
+        toast('Stage centre set (accuracy ±'+Math.round(pos.coords.accuracy)+'m). Now share the link.');$('centerHere').disabled=false;$('centerHere').textContent='⌖ Use my GPS position as centre';
+      },err=>{toast('Location failed: '+err.message);$('centerHere').disabled=false;$('centerHere').textContent='⌖ Use my GPS position as centre';},{enableHighAccuracy:true,maximumAge:0,timeout:18000});
+    });
+    ['lat','lon'].forEach(id=>$(id).addEventListener('input',()=>{state.filtered=null;if(state.mode==='gps'&&state.lastGps)applyGPS(state.lastGps);updateClock();}));
+    $('size').addEventListener('change',()=>{state.stageWidth=Number($('size').value);state.filtered=null;buildGrid();if(state.mode==='gps'&&state.lastGps)applyGPS(state.lastGps);});
+    $('gridCount').addEventListener('change',()=>{state.grid=Number($('gridCount').value);state.zone='OUT';state.filtered=null;buildGrid();if(state.mode==='gps'&&state.lastGps)applyGPS(state.lastGps);else setManual(state.manualX,state.manualY);});
+    function setStart(epoch){state.start=epoch;state.nextTick=null;state.nextEvent=null;logLocal('start',new Date(epoch).toISOString());updateClock();toast('Shared start time updated. Share the NEW link with everyone.');}
+    $('startNow').addEventListener('click',()=>setStart(Date.now()+1000));
+    $('startSoon').addEventListener('click',()=>setStart(Date.now()+90000));
+    function link(){const u=new URL(window.location.href);const c=coords();u.search='';u.hash='';if(c){u.searchParams.set('lat',c.lat.toFixed(7));u.searchParams.set('lon',c.lon.toFixed(7));}u.searchParams.set('size',String(state.stageWidth));u.searchParams.set('grid',String(state.grid));u.searchParams.set('program',state.program);u.searchParams.set('t',String(Math.round(state.start)));if(state.program==='events'&&state.customScore)u.searchParams.set('score',encodeScore(state.score));return u.toString();}
+    async function copyShare(){if(location.protocol==='file:'){toast('Upload the files to an HTTPS website before sharing with other phones.');$('linkFallback').textContent='A local file:/// link will not work on other phones.';$('linkFallback').classList.add('visible');return;}
+      const u=link();try{await navigator.clipboard.writeText(u);toast('Invitation link copied. Send it to all participating phones.');$('linkFallback').classList.remove('visible');}catch{const e=$('linkFallback');e.textContent=u;e.classList.add('visible');toast('Select and copy the link shown below.');}}
+    $('shareLink').addEventListener('click',copyShare);
+    $('nativeShare').addEventListener('click',async()=>{if(location.protocol==='file:'){toast('Host over HTTPS before sharing.');return;}if(navigator.share){try{await navigator.share({title:'Join my Soundfield',text:'Join this decentralised musical performance',url:link()});}catch(e){if(e.name!=='AbortError')copyShare();}}else copyShare();});
+    $('deviceNumber').addEventListener('change',()=>{const n=Number($('deviceNumber').value);state.device=n;try{localStorage.setItem('soundfield-device',String(n));}catch{}if(n>0){state.voice=(n-1)%5;$('voice').value=String(state.voice);toast('Assigned instrument part '+(state.voice+1));}logLocal('device',n);});
+    $('program').addEventListener('change',()=>{state.program=$('program').value;state.nextTick=null;state.nextEvent=null;updateProgramHint();logLocal('program',state.program);toast('Programme changed. Share a fresh link with the same programme.');});
+    $('clockTrim').addEventListener('input',()=>{state.trim=Number($('clockTrim').value);$('trimValue').textContent=(state.trim>0?'+':'')+state.trim+' ms';state.nextTick=null;state.nextEvent=null;});
+    $('trimReset').addEventListener('click',()=>{$('clockTrim').value='0';$('clockTrim').dispatchEvent(new Event('input'));});
+    $('voice').addEventListener('change',()=>{state.voice=Number($('voice').value);try{localStorage.setItem('soundfield-voice',String(state.voice));}catch{}toast('Musical part '+(state.voice+1)+' selected');});
+    $('volume').addEventListener('input',()=>{state.vol=Number($('volume').value)/100;$('volLabel').textContent=Math.round(state.vol*100)+'%';if(state.master&&state.audio)state.master.gain.setTargetAtTime(state.vol*.42,state.audio.currentTime,.05);});
+    function updateClock(){const delta=state.start-Date.now();$('elapsedDisplay').textContent=delta>0?'Begins in '+(delta/1000).toFixed(1)+' s':'Elapsed '+fmtElapsed(-delta);const when=new Date(state.start);let msg='Shared start: '+when.toLocaleString(undefined,{weekday:'short',hour:'2-digit',minute:'2-digit',second:'2-digit'});
+      if(delta>0){const s=Math.ceil(delta/1000);msg+=' · Starts in '+Math.floor(s/60)+'m '+String(s%60).padStart(2,'0')+'s';}else msg+=' · In progress ('+Math.floor(-delta/1000)+'s elapsed)';$('clockInfo').textContent=msg;
+      if(state.playing){if(state.audio&&state.audio.state!=='running'){$('state').textContent='Audio paused';$('audioWarning').classList.remove('hide');$('audioIndicator').textContent='REARM AUDIO';}
+        else if(delta>0){$('state').textContent='Waiting '+Math.ceil(delta/1000)+'s';$('audioIndicator').textContent='ARMED';$('audioWarning').classList.add('hide');}
+        else if(state.zone==='OUT'){$('state').textContent='Outside stage';$('audioIndicator').textContent='MUTED BY ZONE';$('audioWarning').classList.add('hide');}
+        else{$('state').textContent='Playing live';$('audioIndicator').textContent='● SOUND ON';$('audioWarning').classList.add('hide');}}
+      else{$('state').textContent='Ready to join';$('audioIndicator').textContent='SOUND OFF';}
+    }
+    function fmtElapsed(ms){const t=Math.max(0,Math.floor(ms)),seconds=Math.floor(t/1000),mins=Math.floor(seconds/60),hours=Math.floor(mins/60);return String(hours).padStart(2,'0')+':'+String(mins%60).padStart(2,'0')+':'+String(seconds%60).padStart(2,'0')+'.'+String(t%1000).padStart(3,'0');}
+    const midiToHz=n=>440*Math.pow(2,(n-69)/12);
+    function tone(note,when,seconds,zone,intensity=1){const a=state.audio;if(!a||a.state!=='running'||!state.master)return;
+      const typeMap={NW:'sine',NE:'triangle',SW:'sine',SE:'sine'};const warm=zone==='NE',deep=zone==='SW',glass=zone==='SE',bells=zone==='NW';
+      const osc=a.createOscillator(),harm=a.createOscillator(),vca=a.createGain(),filter=a.createBiquadFilter(),blend=a.createGain();
+      osc.type=typeMap[zone]||'sine';harm.type=warm?'triangle':'sine';osc.frequency.setValueAtTime(midiToHz(note),when);
+      harm.frequency.setValueAtTime(midiToHz(note)*(bells?2.005:glass?3:deep?.501:2),when);
+      blend.gain.value=warm?.13:deep?.15:glass?.12:.2;
+      filter.type='lowpass';filter.frequency.value=warm?2100:deep?900:glass?4500:3700;filter.Q.value=.6;
+      const duration=clamp(seconds,.12,5.1),attack=deep?.12:glass?.025:.008;
+      const peak=(deep?.24:warm?.24:glass?.17:.17)*clamp(intensity,.12,1.2);
+      vca.gain.setValueAtTime(.0001,when);vca.gain.exponentialRampToValueAtTime(Math.max(peak,.001),when+attack);
+      vca.gain.exponentialRampToValueAtTime(Math.max(peak*.43,.001),when+Math.min(duration*.48,1.7));vca.gain.exponentialRampToValueAtTime(.0001,when+duration);
+      osc.connect(filter);harm.connect(blend);blend.connect(filter);filter.connect(vca);vca.connect(state.master);
+      osc.start(when);harm.start(when);osc.stop(when+duration+.03);harm.stop(when+duration+.03);
+      osc.onended=()=>{try{osc.disconnect();harm.disconnect();vca.disconnect();filter.disconnect();blend.disconnect();}catch{}};
+    }
+    function beacon(when){const a=state.audio;if(!a||a.state!=='running'||state.zone==='OUT')return;
+      // All voices play exactly the same bright transient: useful for multi-phone recordings.
+      const osc=a.createOscillator(),g=a.createGain();osc.type='sine';osc.frequency.setValueAtTime(1200,when);
+      osc.frequency.exponentialRampToValueAtTime(850,when+.095);
+      g.gain.setValueAtTime(.0001,when);g.gain.exponentialRampToValueAtTime(.43,when+.004);
+      g.gain.exponentialRampToValueAtTime(.0001,when+.135);
+      osc.connect(g);g.connect(state.master);osc.start(when);osc.stop(when+.15);osc.onended=()=>{osc.disconnect();g.disconnect();};
+    }
+    function sweep(when,seconds,down=false){const a=state.audio;if(!a||a.state!=='running'||state.zone==='OUT')return;
+      const d=clamp(seconds,.3,12),osc=a.createOscillator(),vca=a.createGain(),filter=a.createBiquadFilter();
+      const p=state.voice,trans=cellPitch(),freq=midiToHz(49+p*2+trans);
+      osc.type=state.zone==='NE'?'triangle':'sine';osc.frequency.setValueAtTime(freq*(down?2.2:.7),when);
+      osc.frequency.exponentialRampToValueAtTime(freq*(down?.65:2.3),when+d);
+      filter.type='lowpass';filter.frequency.value=2600;
+      vca.gain.setValueAtTime(.0001,when);vca.gain.linearRampToValueAtTime(.15,when+.2);vca.gain.setValueAtTime(.15,when+Math.max(.21,d-.5));vca.gain.linearRampToValueAtTime(.0001,when+d);
+      osc.connect(filter);filter.connect(vca);vca.connect(state.master);osc.start(when);osc.stop(when+d+.03);
+      osc.onended=()=>{osc.disconnect();filter.disconnect();vca.disconnect();};
+    }
+    function playScoreEvent(e,when){if(state.zone==='OUT'||!state.playing)return;
+      if(e.type==='rest')return;
+      if(e.type==='beacon'){beacon(when);return;}
+      const chord=[48,52,55,60,64];const base=chord[state.voice]+cellPitch();
+      if(e.type==='pulse'){const count=e.count||4,gap=e.gap||.4;
+        for(let i=0;i<count;i++){const n=base+(i%4)*2+(i%3===0?0:1);tone(n,when+i*gap,Math.min(.35,gap*.8),state.zone,.6);}
+      }else if(e.type==='drone'){
+        const d=e.duration||5; // two overlapping tones create a gently beating cluster
+        tone(base-12,when,d,state.zone,.53);tone(base+7,when+.025,d-.03,state.zone,.37);
+      }else if(e.type==='sweep'){sweep(when,e.duration||3,Boolean(e.down));}
+    }
+    function eventAt(n){const score=state.score,cycle=Math.floor(n/score.events.length),idx=n%score.events.length,e=score.events[idx];return{event:e,epoch:state.start+cycle*score.duration*1000+e.t*1000};}
+    function findNextEvent(now){const s=state.score,elapsed=(now-state.start-state.trim)/1000,cyc=Math.max(0,Math.floor(elapsed/s.duration));
+      for(let c=cyc;c<=cyc+1;c++)for(let j=0;j<s.events.length;j++)if(state.start+(c*s.duration+s.events[j].t)*1000+state.trim>=now+12)return c*s.events.length+j;
+      return(cyc+1)*s.events.length;
+    }
+    function scheduleEvents(now,horizon){if(state.nextEvent===null)state.nextEvent=findNextEvent(now);
+      let iter=0;
+      while(iter<40){const {event,epoch:untrimmed}=eventAt(state.nextEvent),epoch=untrimmed+state.trim;
+        if(epoch>horizon)break;
+        const lead=epoch-Date.now();
+        if(lead>=8){const at=state.audio.currentTime+lead/1000;
+          if(event.type!=='rest')playScoreEvent(event,at);
+          state.scheduled++;
+        }else{state.late++;logLocal('late-event',`${event.type} at ${epoch} late ${-lead}ms`);}
+        state.nextEvent++;iter++;
+      }
+      // If browser froze while backgrounded, jump to the current position, not missed notes.
+      if(iter===40||state.nextEvent<findNextEvent(now)-1)state.nextEvent=findNextEvent(now);
+    }
+    function updateProgramHint(){const events=state.program==='events';
+      $('programHint').textContent=events?`64-second repeating study: 4 event types + rest. Score ID ${scoreHash(state.score)}. Every phone computes it independently.`:'Original 96 BPM harmonic loop preserved. Test the event study when ready.';
+      $('playDetail').textContent=events?`Event score · ${state.score.duration}s cycle · ${state.score.events.length} events · 5 parts`:'Tempo: 96 BPM · 4-chord loop · 5 parts';
+      $('scoreLabel').textContent=(state.customScore?'CUSTOM ':'DEFAULT ')+scoreHash(state.score);
+      $('diagScore').textContent=state.program+' / '+scoreHash(state.score);
+      $('scoreJson').value=JSON.stringify(state.score,null,2);
+      const root=$('eventStrip');root.replaceChildren();
+      for(const e of state.score.events){const node=document.createElement('div');node.className='eventTag';const bold=document.createElement('strong');bold.textContent=e.t+'s · '+e.type;const body=document.createElement('span');body.textContent=' '+e.label;node.append(bold,body);root.appendChild(node);}
+    }
+    $('toggleEditor').addEventListener('click',()=>{const box=$('scoreEditorBox');box.classList.toggle('hide');$('toggleEditor').textContent=box.classList.contains('hide')?'Show score JSON':'Hide score JSON';});
+    function applyEditorScore(){try{
+        const next=validateScore(JSON.parse($('scoreJson').value));state.score=next;state.customScore=true;state.nextEvent=null;
+        if(state.program!=='events'){$('program').value='events';state.program='events';state.nextTick=null;}
+        updateProgramHint();showNotice('scoreValidation','Score applied to this phone. SHARE THE UPDATED INVITATION LINK so other devices load the same programme and score.','good');logLocal('score-applied',scoreHash(state.score));toast('Score applied. Share a new invitation link.');
+      }catch(err){showNotice('scoreValidation','Could not apply score: '+err.message,'error');}}
+    $('applyScore').addEventListener('click',applyEditorScore);
+    $('resetScore').addEventListener('click',()=>{state.score=deepClone(DEMO_SCORE);state.customScore=false;state.nextEvent=null;updateProgramHint();showNotice('scoreValidation','Original example restored. Share the new link if other devices were using a custom score.','good');});
+    async function copyText(s){try{await navigator.clipboard.writeText(s);return true;}catch{return false;}}
+    $('copyScore').addEventListener('click',async()=>{const ok=await copyText(JSON.stringify(state.score,null,2));if(ok)toast('Score JSON copied');else{if($('scoreEditorBox').classList.contains('hide'))$('toggleEditor').click();$('scoreJson').focus();$('scoreJson').select();toast('Select and copy the JSON shown.');}});
+    function diagnosticReport(){const a=state.audio;return{
+      version:'2.0',timeISO:new Date().toISOString(),device:state.device,part:state.voice+1,program:state.program,scoreID:scoreHash(state.score),
+      duration:state.score.duration,stageSizeM:state.stageWidth,grid:state.grid,cellWidthM:cellWidth(),
+      startISO:new Date(state.start).toISOString(),elapsedMs:Date.now()-state.start,
+      audioState:a?.state||'not-created',audioSampleRate:a?.sampleRate??null,audioBaseLatencyMs:typeof a?.baseLatency==='number'?Math.round(a.baseLatency*1000):null,
+      audioOutputLatencyMs:typeof a?.outputLatency==='number'?Math.round(a.outputLatency*1000):null,
+      timingTrimMs:state.trim,scheduledEvents:state.scheduled,lateOrMissedEvents:state.late,
+      visibilityInterruptions:state.hiddenCount,hiddenMs:state.hiddenMs+(state.hiddenSince?Date.now()-state.hiddenSince:0),wakeLock:state.wakeText,
+      secureContext:window.isSecureContext,geolocationSupported:!!navigator.geolocation,gpsPermission:state.gpsPermission,
+      gpsFixes:state.gpsFixes,lastGPSAccuracyM:state.lastGps?.accuracy??null,lastGPSFixAgeMs:state.lastGPSAt?Date.now()-state.lastGPSAt:null,
+      gpsError:state.gpsError,browser:navigator.userAgent,logs:state.logs
+    };}
+    $('copyReport').addEventListener('click',async()=>{const payload=JSON.stringify(diagnosticReport(),null,2);if(await copyText(payload))toast('Device diagnostic report copied.');else{const blob=new Blob([payload],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='soundfield-device-'+(state.device||'unknown')+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);toast('Report downloaded.');}});
+    function updateDiagnostics(){const a=state.audio;
+      $('diagAudio').textContent=a?(a.state+' · '+a.sampleRate+' Hz'):'Not armed';
+      $('diagEvents').textContent=state.scheduled+' / '+state.late;
+      $('diagPermission').textContent=state.gpsPermission;
+      $('diagGPS').textContent=state.gpsFixes+' / '+(state.lastGps?'±'+Math.round(state.lastGps.accuracy)+'m':'—');
+      $('diagHidden').textContent=state.hiddenCount;
+      $('wakeStatus').textContent='Wake lock: '+state.wakeText;
+      $('foregroundStatus').textContent='Page: '+(document.hidden?'background':'foreground');
+      if(state.program==='events'){
+        const now=Date.now(),n=findNextEvent(now),{event,epoch}=eventAt(n);
+        $('nextEventLabel').textContent=`Next: ${event.type} (${event.label}), in ${Math.max(0,Math.round((epoch+state.trim-now)/1000))}s`;
+      }else $('nextEventLabel').textContent='Choose Sonic event study to run these events';
+    }
+    function noteFor(tick,chordIndex,part){const c=CHORDS[chordIndex];const step=tick%16;const measure=Math.floor(tick/16)%4;
+      if(part===0){const beats={0:0,3:1,6:2,8:3,11:2,14:1};if(!(step in beats))return null;const idx=(beats[step]+measure)%4;return {midi:c[idx]+(idx===3?0:12),length:.48,power:.9};}
+      if(part===1){const beats={2:2,5:1,10:0,13:2};if(!(step in beats))return null;return {midi:c[(beats[step]+(measure%2))%4]+12,length:.56,power:.72};}
+      if(part===2){if(![0,4,8,12].includes(step))return null;return {midi:c[(step/4+measure)%4]+(step===12?12:0),length:1.0,power:.46};}
+      if(part===3){if(![0,2,4,6,8,10,12,14].includes(step))return null;return {midi:c[step%4===0?0:2]-12,length:.2,power:.48};}
+      if(part===4){if(![0,8].includes(step))return null;return {midi:c[step===0?1:2],length:3.35,power:.42};}
+      return null;
+    }
+    function playTick(tick,when){if(state.zone==='OUT'||!state.playing)return;
+      // Every participating device follows the same global step; location and chosen part are purely local.
+      const chordIdx=Math.floor(tick/16)%CHORDS.length;
+      const n=noteFor(tick,chordIdx,state.voice);if(n)tone(n.midi+cellPitch(),when,n.length,state.zone,n.power);
+    }
+    function schedule(){if(!state.playing||!state.audio||state.audio.state!=='running')return;
+      const now=Date.now(),horizon=now+380;
+      if(state.program==='events'){scheduleEvents(now,horizon);return;}
+      if(state.nextTick===null)state.nextTick=Math.max(0,Math.ceil((now-state.start-state.trim+25)/STEP_MS));
+      let count=0;
+      while(state.start+state.nextTick*STEP_MS+state.trim<=horizon&&count<16){
+        const epoch=state.start+state.nextTick*STEP_MS+state.trim;
+        const lead=epoch-Date.now();
+        if(lead>=8){playTick(state.nextTick,state.audio.currentTime+lead/1000);state.scheduled++;}
+        else{state.late++;}
+        state.nextTick++;count++;
+      }
+      const currentTick=Math.floor((now-state.start-state.trim)/STEP_MS);
+      if(state.nextTick<currentTick-2)state.nextTick=Math.max(0,currentTick+1);
+    }
+    async function acquireWakeLock(){
+      if(!state.playing)return;
+      if(!('wakeLock' in navigator)){state.wakeText='unsupported';return;}
+      if(document.hidden){state.wakeText='unavailable in background';return;}
+      if(state.wakeLock&&!state.wakeLock.released){state.wakeText='ACTIVE';return;}
+      try{const lock=await navigator.wakeLock.request('screen');state.wakeLock=lock;state.wakeText='ACTIVE';
+        lock.addEventListener('release',()=>{if(state.wakeLock===lock){state.wakeLock=null;state.wakeText='released by system';logLocal('wake-release','Wake lock released');}});
+      }catch(e){state.wakeText='unavailable ('+(e.name||'denied')+')';logLocal('wake-error',e.name||'unknown');}
+    }
+    async function armAudio(){if(!state.audio){const AudioCtor=window.AudioContext||window.webkitAudioContext;if(!AudioCtor){showNotice('playNotice','This browser cannot run Web Audio. Try Safari on iPhone or Chrome on Android.','error');return false;}
+        state.audio=new AudioCtor();state.audio.addEventListener('statechange',()=>{logLocal('audio-state',state.audio.state);updateClock();});state.master=state.audio.createGain();state.master.gain.value=state.vol*.42;
+        state.compressor=state.audio.createDynamicsCompressor();state.compressor.threshold.value=-18;state.compressor.knee.value=22;state.compressor.ratio.value=5;state.compressor.attack.value=.005;state.compressor.release.value=.16;
+        state.master.connect(state.compressor);state.compressor.connect(state.audio.destination);}
+      try{await state.audio.resume();}catch(e){showNotice('playNotice','Audio could not start: '+e.message,'error');return false;}
+      if(state.audio.state!=='running'){showNotice('playNotice','Audio was blocked. Tap again and check your device audio settings.','warning');return false;}
+      return true;
+    }
+    function stopAudio(){state.playing=false;clearInterval(state.timer);state.timer=null;state.nextTick=null;state.nextEvent=null;logLocal('audio-stop','user');
+      if(state.master&&state.audio){state.master.gain.setTargetAtTime(0,state.audio.currentTime,.06);}
+      if(state.wakeLock){state.wakeLock.release().catch(()=>{});state.wakeLock=null;}state.wakeText='not requested';
+      $('play').textContent='▶ Arm sound & join the piece';$('play').classList.remove('warn');$('play').classList.add('primary');$('audioWarning').classList.add('hide');showNotice('playNotice','Sound stopped. Tap to arm this phone again.');updateClock();
+    }
+    $('play').addEventListener('click',async()=>{if(state.playing&&state.audio&&state.audio.state==='running'){stopAudio();return;}
+      const ok=await armAudio();if(!ok)return;
+      state.playing=true;state.master.gain.setTargetAtTime(state.vol*.42,state.audio.currentTime,.04);logLocal('audio-arm',state.audio.state); 
+      if(state.timer)clearInterval(state.timer);state.nextTick=null;state.nextEvent=null;state.timer=setInterval(schedule,65);schedule();acquireWakeLock();
+      $('play').textContent='■ Stop my sound';$('play').classList.add('warn');$('play').classList.remove('primary');
+      showNotice('playNotice','This phone is armed. Sound is generated locally. Keep this app visible; locked phones may suspend playback.','good');updateClock();
+    });
+    document.addEventListener('visibilitychange',()=>{
+      if(document.hidden){state.hiddenSince=Date.now();state.hiddenCount++;logLocal('background','hidden');}
+      else{if(state.hiddenSince){state.hiddenMs+=Date.now()-state.hiddenSince;state.hiddenSince=null;}logLocal('foreground','returned');
+        if(state.playing){acquireWakeLock();if(state.audio?.state==='running'){state.nextTick=null;state.nextEvent=null;schedule();}
+          // Do not promise background audio or automatic permission bypass.
+          if(state.audio?.state!=='running')$('audioWarning').classList.remove('hide');}
+      }
+      updateClock();updateDiagnostics();
+    });
+    window.addEventListener('pageshow',()=>{if(state.playing){state.nextTick=null;state.nextEvent=null;schedule();}});
+    if('serviceWorker' in navigator&&location.protocol==='https:')navigator.serviceWorker.register('./sw.js').catch(()=>{});
+    // The local coordinates stay in JS memory. They are never uploaded by the app.
+    setInterval(updateClock,120);setInterval(updateDiagnostics,500);buildGrid();setMode('manual');showDot(-.5,.5);renderZone();updateProgramHint();updateClock();updateDiagnostics();
+    if(params.has('t'))toast('Shared show settings loaded. Choose a musical part and arm sound.');
+  })();
+  </script>
+</body>
+</html>
